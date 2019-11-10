@@ -11,7 +11,7 @@ parser.add_argument('--evaluate', default=False, action='store_true')
 parser.add_argument('--checkpoint', type=int, default=0, help='checkpoint (epoch id) that will be loaded')
 parser.add_argument('--num_workers', type=int, default=0, help='number of data loading workers')
 parser.add_argument('--cuda', type=bool, default=False, help='enables cuda')
-parser.add_argument('--disp_step', type=int, default=50, help='display step during training')
+parser.add_argument('--disp_step', type=int, default=2, help='display step during training')
 args_opt = parser.parse_args()
 
 exp_config_file = os.path.join('.', 'config', args_opt.exp + '.py')

@@ -93,7 +93,7 @@ class Algorithm():
         self.logger.info('==> Load pretrained parameters from file %s:' % (pretrained_path))
 
         assert (os.path.isfile(pretrained_path))
-        pretrained_model = torch.load(pretrained_path)
+        pretrained_model = torch.load(pretrained_path, map_location=lambda storage, loc: storage)
         if pretrained_model['network'].keys() == network.state_dict().keys():
             network.load_state_dict(pretrained_model['network'])
         else:
@@ -266,7 +266,7 @@ class Algorithm():
             train_stats.update(train_stats_this)
             if (idx + 1) % disp_step == 0:
                 self.logger.info('==> Iteration [%3d][%4d / %4d]: %s' % (
-                epoch + 1, idx + 1, len(data_loader), train_stats.average()))
+                epoch + 1, idx + 1, self.bnumber, train_stats.average()))
 
         return train_stats.average()
 
@@ -275,7 +275,7 @@ class Algorithm():
 
         self.dloader = dloader
         self.dataset_eval = dloader.dataset
-        self.logger.info('==> Dataset: %s [%d images]' % (dloader.dataset.name, len(dloader)))
+        self.logger.info('==> Dataset: %s [%d images]' % (dloader.dataset.name, len(dloader())))
         for key, network in self.networks.items():
             network.eval()
 
